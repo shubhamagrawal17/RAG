@@ -1,25 +1,74 @@
+# Built-in module used for file and directory operations
 import os
+
+# Built-in module used to calculate execution time
 import time
 
+# Loads PDF files and extracts text content
 from langchain_community.document_loaders import PyMuPDFLoader
+
+# Splits large documents into smaller chunks
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Chroma vector database for storing embeddings
 from langchain_chroma import Chroma
+
+# Embedding model + Local LLM via Ollama
 from langchain_ollama import OllamaEmbeddings, ChatOllama
 
+# Custom prompt template used for RAG responses
 from prompt_template import prompt_template
+
 
 # =========================================================
 # CONFIGURATION
 # =========================================================
+
+# Directory where ChromaDB vector database will be stored
 DB_DIR = "chroma_db"
+
+# Directory containing PDF documents
 DOCS_DIR = "docs"
 
+
+# ---------------------------------------------------------
+# CHUNKING SETTINGS
+# ---------------------------------------------------------
+
+# Maximum characters per chunk
 CHUNK_SIZE = 500
+
+# Characters shared between consecutive chunks
+# Helps preserve context across chunk boundaries
 CHUNK_OVERLAP = 100
 
+
+# ---------------------------------------------------------
+# RETRIEVAL SETTINGS
+# ---------------------------------------------------------
+
+# Number of final chunks sent to the LLM
 TOP_K = 5
+
+# Number of chunks initially retrieved from ChromaDB
+# before filtering
 FETCH_K = 10
 
+
+# ---------------------------------------------------------
+# SIMILARITY FILTERING
+# ---------------------------------------------------------
+
+# Maximum acceptable similarity score
+# Lower score = Better match
+#
+# Example:
+# 0.12 -> Excellent Match
+# 0.25 -> Good Match
+# 0.45 -> Acceptable Match
+# 0.70 -> Poor Match
+#
+# Chunks above this value will be ignored
 SIMILARITY_THRESHOLD = 0.45
 
 # =========================================================
